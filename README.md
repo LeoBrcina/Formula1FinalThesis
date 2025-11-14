@@ -1,166 +1,240 @@
-# 📘 Formula 1 Final Thesis — Data Analysis, Telemetry & Podium Prediction Platform
+# 📘 Formula 1 Final Thesis — Race Analytics, Telemetry & Prediction Platform
 
-## 🚀 Overview
-This project represents a complete software solution developed as part of a final thesis on **Formula 1 data analysis and prediction**.  
-It integrates **historical datasets, live-style telemetry**, advanced **machine learning models**, and a custom-built **FastAPI backend** to provide a powerful environment for race analytics and predictions.
-
-The project is divided into two major parts:
-- **Formula 1 Final Thesis Project** → Full backend (FastAPI) + frontend  
-- **Formula 1 Final Thesis ML** → Machine learning system (LightGBM, XGBoost, RandomForest)
-
-Together, they create a unified platform for:  
-✔ Race result analysis  
-✔ Driver/constructor insights  
-✔ Telemetry visualization  
-✔ Sector dominance SVG maps  
-✔ Strategy & stint analysis  
-✔ Podium prediction using trained ML models  
+**Author:** Leo Brcina  
+**University:** Algebra University College (Software Engineering Thesis)  
+**Year:** 2025  
 
 ---
 
-# 🧱 Key Features
+## 🚀 Overview
 
-### 🔹 FastAPI Backend
-- Fully documented Swagger docs (`/docs`)
-- Modular endpoints:
-  - Drivers  
-  - Constructors  
-  - Circuits  
-  - Results  
-  - Standings  
-  - Schedule  
-- Telemetry endpoints using FastF1
-- SVG sector dominance visualizations
-- PostgreSQL caching to avoid repeated telemetry downloads
+This is a full-featured Formula 1 analytics and prediction system developed as a university thesis project. It combines historical and live-style race data, telemetry, and machine learning predictions into a modular, high-performance application with a clean, responsive frontend.
 
-### 🔹 Machine Learning Podium Predictor
-- Complete preprocessing pipeline for F1 race data
-- Feature engineering:
-  - Grid position  
-  - Driver & constructor form  
-  - Circuit history  
-  - Sector performance  
-  - Pace deltas  
-- Trained models:
+The system is designed to help fans, analysts, and developers explore F1 race dynamics with:
+
+- Rich **seasonal insights**
+- Detailed **race and driver stats**
+- Visual **telemetry and dominance maps**
+- **Podium predictions** powered by machine learning
+
+---
+
+## 🧠 High-Level Architecture
+
+The repository is organized into two main modules:
+
+### `Formula 1 Final Thesis Project`
+- **FastAPI backend** exposing REST endpoints  
+- **React + Next.js + Tailwind** frontend for visualization  
+- Telemetry and standings integration via **FastF1** and **Jolpica (Ergast-compatible)**  
+
+### `Formula 1 Final Thesis ML`
+- Python-based **machine learning pipeline**  
+- Feature engineering, training, and inference scripts  
+- Models for podium prediction (LightGBM, XGBoost, Random Forest)  
+
+These modules are loosely coupled: the ML module can run independently, while its outputs (predicted podiums) can be consumed by the backend or manually added to the frontend.
+
+---
+
+## 🧩 Core Features
+
+### 🔧 FastAPI Backend
+
+- Fully documented **Swagger UI** at `/docs`
+- Clean routing grouped by domain:
+  - **Drivers**
+  - **Constructors**
+  - **Circuits**
+  - **Results**
+  - **Standings**
+  - **Schedule**
+- **Telemetry endpoints** powered by FastF1:
+  - Lap timing data  
+  - Position tracking  
+  - Strategy & stint info  
+  - Sector dominance with SVG circuit maps
+- **PostgreSQL caching layer**
+  - Reduces repeat telemetry downloads  
+  - Stores race session data for fast retrieval  
+
+---
+
+### 🖥️ Frontend (Next.js)
+
+- **Next.js + TypeScript**  
+- Styled with **Tailwind CSS**  
+- Clean, dark, modern F1-inspired design  
+- Components:
+  - Card-based UI with hover effects  
+  - Red glow borders  
+  - Clear hierarchy for readability  
+- Pages:
+  - `/` — Landing page  
+  - `/races/{year}`  
+  - `/results/{year}/{round}`  
+  - `/circuits/season/{year}`  
+  - `/predictions` — ML-guided podium predictions  
+
+---
+
+### 🧠 Machine Learning Podium Predictor
+
+Located in **`Formula 1 Final Thesis ML`**, the ML workflow includes:
+
+- **Algorithms**
   - LightGBM  
   - XGBoost  
   - Random Forest  
-- Predicts podium probabilities for each driver
 
-### 🔹 Data Processing Pipeline
-- Raw data in `Data/`
-- Cleaned Excel data in `DataExcel/`
-- ML-ready normalized data in `DataML/`
-- Models stored in `Models/`
-- Prediction scripts in `Predictor/`
+- **Feature Engineering**
+  - Grid position  
+  - Driver and constructor form  
+  - Circuit history  
+  - Pace deltas  
+  - Consistency metrics  
 
-### 🔹 Clean Architecture
-- Backend, ML, and data processing are fully separated
-- Large cache folders excluded via `.gitignore`
-- Prepared for cloud deployment and containerization
+- **Workflow**
+  1. Import raw data (Ergast/Jolpica & telemetry-derived)  
+  2. Clean & normalize → `DataExcel/`  
+  3. Create ML-ready datasets → `DataML/`  
+  4. Train using GridSearchCV  
+  5. Save models → `Models/`  
+  6. Predict podiums using scripts in `Predictor/`  
 
----
-
-# 🧰 Tech Stack
-
-### Backend
-- Python  
-- FastAPI  
-- FastF1  
-- PostgreSQL  
-- psycopg2  
-- Uvicorn  
-
-### Machine Learning
-- LightGBM  
-- XGBoost  
-- Random Forest  
-- Pandas, NumPy  
-- Scikit-learn (GridSearchCV)
-
-### Data Sources
-- Ergast API  
-- Jolpica CSV datasets  
-- FastF1 telemetry  
+> In the thesis version, predictions are **manually added** to the frontend based on model outputs, similar to betting-style prediction sites.
 
 ---
 
-# 📂 Project Structure
+## 📂 Project Structure
 
-```
+```bash
 Formula1FinalThesis/
-│
 ├── Formula 1 Final Thesis Project/
 │   ├── Backend/
 │   │   ├── api/
-│   │   ├── cache/                (ignored in Git – FastF1 cache)
 │   │   ├── database/
 │   │   ├── models/
 │   │   ├── routers/
 │   │   ├── utils/
 │   │   └── main.py
 │   │
-│   ├── Frontend/
-│   └── ...
+│   └── Frontend/
+│       ├── src/
+│       │   ├── app/
+│       │   │   ├── page.tsx
+│       │   │   ├── races/
+│       │   │   ├── results/[year]/[round]/
+│       │   │   ├── circuits/
+│       │   │   └── predictions/
+│       │   ├── components/
+│       │   └── lib/
+│       │       └── hooks/
+│       └── ...
 │
 └── Formula 1 Final Thesis ML/
-    ├── Data/                     (raw CSVs)
-    ├── DataExcel/                (cleaned data)
-    ├── DataML/                   (ML-ready datasets)
-    ├── Models/                   (trained models)
-    ├── Predictor/                (prediction scripts)
+    ├── Data/
+    ├── DataExcel/
+    ├── DataML/
+    ├── Models/
+    ├── Predictor/
     └── utils/
 ```
 
 ---
 
-# 🏗 System Architecture
+## 📡 Data Sources
+
+The project integrates:
+
+- **Jolpica API** — modern Ergast-compatible JSON API  
+- **Ergast Developer API** — reference formulas and historical model  
+- **FastF1** — for telemetry & session data:
+  - Car telemetry  
+  - Lap times  
+  - Sector data  
+  - GPS coordinates for SVG dominance maps  
+
+---
+
+## 🧱 System Architecture Diagram
 
 ```mermaid
 graph TD
-    A[Ergast API] --> B[Data Processing]
-    A2[FastF1 Telemetry] --> B
-    B --> C[(PostgreSQL Cache)]
-    C --> D[FastAPI Backend]
+    subgraph External Data
+        A[Jolpica / Ergast Data] --> B[Backend]
+        A2[FastF1 Telemetry] --> B
+    end
 
-    D --> E[Frontend UI]
-    D --> F[ML Input Generator]
+    B -->|Normalized & Cached| C[(PostgreSQL)]
+    B --> D[Frontend UI]
+    B --> E[ML Input Generator]
 
-    F --> G[ML Training Pipeline]
-    G --> H[Podium Predictor]
-    H --> D
+    subgraph ML Pipeline
+        E --> F[Data Cleaning & Feature Engineering]
+        F --> G[Model Training (LGBM / XGBoost / RF)]
+        G --> H[Podium Prediction Scripts]
+    end
+
+    H -->|Podium Suggestions| D
 ```
 
 ---
 
-# ⚙️ Installation
+## 🔌 Key Backend Endpoints
 
-## 1️⃣ Backend Setup (FastAPI)
+```http
+GET /drivers/{driver_id}
+GET /constructors/{constructor_id}
+GET /results/{year}/{round}
+GET /standings/drivers/{year}
+GET /standings/constructors/{year}
+GET /races/{year}
+GET /telemetry/{year}/{round}/dominance
+```
+
+Optional ML-related endpoint (depending on integration):
+
+```http
+POST /ml/predict
+```
+
+---
+
+## ⚙️ Installation & Setup
+
+### 1️⃣ Backend (FastAPI)
 
 ```bash
 cd "Formula 1 Final Thesis Project/Backend"
 
 python -m venv venv
-source venv/bin/activate          # Windows: venv\Scripts\activate
+source venv/bin/activate        # Windows: venv\Scripts\activate
 
 pip install -r requirements.txt
+```
 
-# Create .env with:
-# DB_HOST=
-# DB_PORT=
-# DB_USER=
-# DB_PASSWORD=
-# DB_NAME=
+Create `.env`:
 
+```
+DB_HOST=localhost
+DB_PORT=5432
+DB_USER=your_user
+DB_PASSWORD=your_password
+DB_NAME=formula1
+```
+
+Run backend:
+
+```bash
 uvicorn main:app --reload
 ```
 
-📌 Access API documentation:  
-**http://localhost:8000/docs**
+Swagger UI: **http://localhost:8000/docs**
 
 ---
 
-## 2️⃣ Machine Learning Module Setup
+### 2️⃣ Machine Learning Module
 
 ```bash
 cd "Formula 1 Final Thesis ML"
@@ -171,65 +245,45 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### Train models
-```
+Train models:
+
+```bash
 python train_models.py
 ```
 
-### Predict podium
-```
-python predictor/predict_podium.py
+Predict:
+
+```bash
+python Predictor/predict_podium.py
 ```
 
 ---
 
-## 3️⃣ Frontend Setup (if applicable)
+### 3️⃣ Frontend (Next.js)
 
 ```bash
 cd "Formula 1 Final Thesis Project/Frontend"
+
 npm install
 npm run dev
 ```
 
----
-
-# 🔌 Key API Endpoints
-
-### 🔹 Driver info
-```
-GET /drivers/{driver_id}
-```
-
-### 🔹 Constructor info
-```
-GET /constructors/{constructor_id}
-```
-
-### 🔹 Race results
-```
-GET /results/{year}/{round}
-```
-
-### 🔹 Telemetry dominance
-```
-GET /telemetry/{year}/{round}/dominance
-```
+Frontend runs at: **http://localhost:3000**
 
 ---
 
-# 🤖 Machine Learning Workflow
+## 🧠 ML Workflow Summary
 
-1. Load raw data → `Data/`  
-2. Clean & enhance → `DataExcel/`  
-3. Create ML-ready datasets → `DataML/`  
-4. Train models (LightGBM, XGBoost, Random Forest)  
-5. Save models to `Models/`  
-6. Predict via `Predictor/` scripts  
-7. Backend integrates predictions  
+- Raw data → `Data/`
+- Cleaned datasets → `DataExcel/`
+- ML-ready datasets → `DataML/`
+- Model training → LightGBM, XGBoost, Random Forest
+- Models saved → `Models/`
+- Podium predictions → `Predictor/`
 
 ---
 
-# 🧩 .gitignore Summary
+## 🧾 .gitignore Highlights
 
 ```
 fastf1_cache/
@@ -241,45 +295,43 @@ node_modules/
 dist/
 venv/
 .env
+Models/
+DataML/
+DataExcel/
+Data/
 ```
 
-Prevents upload of large telemetry caches and system files.
+---
+
+## 🚧 Future Improvements
+
+- Live telemetry ingestion  
+- More advanced ML (weather, tyre degradation)  
+- Strategy tree visualization  
+- Dockerized deployment  
+- Real-time race predictor UI  
 
 ---
 
-# 🚀 Future Improvements
+## 🙏 Acknowledgements
 
-- Real-time telemetry ingestion  
-- More advanced ML (pit strategy, tyre degradation)  
-- Docker & Kubernetes deployment  
-- Rich frontend visual dashboard  
-- Weather-aware prediction modelling  
-
----
-
-# 🙏 Acknowledgements
-
-- Ergast API  
-- FastF1  
-- Pandas / NumPy / Scikit-learn  
-- Academic research on motorsport analytics  
+- **Ergast Developer API**
+- **Jolpica API**
+- **FastF1**
+- **pandas, NumPy, scikit-learn, LightGBM, XGBoost**
+- Algebra University College – faculty support
 
 ---
 
-# 📄 License
+## 📜 License
 
-MIT or another license can be added here.
+This project is provided for educational and research purposes.  
+A formal license (e.g., MIT) can be added to the repository root.
 
 ---
 
-# 🎉 Final Notes
+## 📌 Repository
 
-This repository delivers a complete **Formula 1 analytics ecosystem**, covering:  
-➡ data ingestion  
-➡ telemetry processing  
-➡ backend engineering  
-➡ machine learning modelling  
-➡ prediction serving  
+https://github.com/LeoBrcina/Formula1FinalThesis
 
-A full end-to-end demonstration of applied motorsport data science and software architecture.
-
+**Built with speed, precision, and a lot of telemetry. 🏁**
