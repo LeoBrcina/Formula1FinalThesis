@@ -215,11 +215,6 @@ GET /results/{year}/{round}
 GET /telemetry/{year}/{round}/dominance
 ```
 
-### 🔹 Podium prediction
-```
-POST /ml/predict
-```
-
 ---
 
 # 🤖 Machine Learning Workflow
