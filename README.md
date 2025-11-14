@@ -161,7 +161,7 @@ The project integrates:
 
 ```mermaid
 graph TD
-    subgraph External Data
+    subgraph External_Data
         A[Jolpica / Ergast Data] --> B[Backend]
         A2[FastF1 Telemetry] --> B
     end
@@ -170,7 +170,7 @@ graph TD
     B --> D[Frontend UI]
     B --> E[ML Input Generator]
 
-    subgraph ML Pipeline
+    subgraph ML_Pipeline
         E --> F[Data Cleaning & Feature Engineering]
         F --> G[Model Training (LGBM / XGBoost / RF)]
         G --> H[Podium Prediction Scripts]
@@ -193,7 +193,7 @@ GET /races/{year}
 GET /telemetry/{year}/{round}/dominance
 ```
 
-Optional ML-related endpoint (depending on integration):
+Optional ML-related endpoint:
 
 ```http
 POST /ml/predict
@@ -216,7 +216,7 @@ pip install -r requirements.txt
 
 Create `.env`:
 
-```
+```env
 DB_HOST=localhost
 DB_PORT=5432
 DB_USER=your_user
@@ -274,18 +274,18 @@ Frontend runs at: **http://localhost:3000**
 
 ## 🧠 ML Workflow Summary
 
-- Raw data → `Data/`
-- Cleaned datasets → `DataExcel/`
-- ML-ready datasets → `DataML/`
-- Model training → LightGBM, XGBoost, Random Forest
-- Models saved → `Models/`
-- Podium predictions → `Predictor/`
+- Raw data → `Data/`  
+- Cleaned datasets → `DataExcel/`  
+- ML-ready datasets → `DataML/`  
+- Model training → LightGBM, XGBoost, Random Forest  
+- Models saved → `Models/`  
+- Podium predictions → `Predictor/`  
 
 ---
 
 ## 🧾 .gitignore Highlights
 
-```
+```gitignore
 fastf1_cache/
 Cache/
 *.sqlite
@@ -315,11 +315,11 @@ Data/
 
 ## 🙏 Acknowledgements
 
-- **Ergast Developer API**
-- **Jolpica API**
-- **FastF1**
-- **pandas, NumPy, scikit-learn, LightGBM, XGBoost**
-- Algebra University College – faculty support
+- **Ergast Developer API**  
+- **Jolpica API**  
+- **FastF1**  
+- **pandas, NumPy, scikit-learn, LightGBM, XGBoost**  
+- Algebra University College – faculty support  
 
 ---
 
