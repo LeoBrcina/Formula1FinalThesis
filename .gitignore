@@ -1,0 +1,48 @@
+##########################
+# PYTHON + FASTF1 CACHE
+##########################
+
+# FastF1 cache folders
+**/fastf1_cache/
+**/Cache/
+
+# FastF1 cache file types
+*.ff1pkl
+*.sqlite
+
+# Python bytecode
+__pycache__/
+*.py[cod]
+*.pyd
+
+# Virtual environments
+venv/
+env/
+.env/
+
+# Jupyter
+.ipynb_checkpoints/
+
+##########################
+# FRONTEND (if present)
+##########################
+
+node_modules/
+dist/
+build/
+*.log
+
+##########################
+# OS / EDITOR
+##########################
+
+.DS_Store
+Thumbs.db
+
+##########################
+# OTHER
+##########################
+
+*.log
+*.bak
+*.tmp
