@@ -157,26 +157,21 @@ The project integrates:
 
 ---
 
-## 🧱 System Architecture Diagram
+# 🏗 System Architecture
 
 ```mermaid
 graph TD
-    subgraph External_Data
-        A[Jolpica / Ergast Data] --> B[Backend]
-        A2[FastF1 Telemetry] --> B
-    end
+    A[Ergast API] --> B[Data Processing]
+    A2[FastF1 Telemetry] --> B
+    B --> C[(PostgreSQL Cache)]
+    C --> D[FastAPI Backend]
 
-    B -->|Normalized & Cached| C[(PostgreSQL)]
-    B --> D[Frontend UI]
-    B --> E[ML Input Generator]
+    D --> E[Frontend UI]
+    D --> F[ML Input Generator]
 
-    subgraph ML_Pipeline
-        E --> F[Data Cleaning & Feature Engineering]
-        F --> G[Model Training (LGBM / XGBoost / RF)]
-        G --> H[Podium Prediction Scripts]
-    end
-
-    H -->|Podium Suggestions| D
+    F --> G[ML Training Pipeline]
+    G --> H[Podium Predictor]
+    H --> D
 ```
 
 ---
