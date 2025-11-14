@@ -308,6 +308,22 @@ Data/
 
 ---
 
+### Security Considerations
+
+The complete application (backend, frontend, and machine learning modules)
+was developed and executed exclusively in a local environment. The database
+and API services were bound to `localhost` and were never deployed or
+exposed to the public internet. Because of this, no external attack surface
+existed.
+
+In a production environment, the system would require additional security
+elements such as CORS restrictions, authentication, request validation,
+rate limiting, and secure environment variable management. These measures
+were unnecessary for the thesis scope, as all components operated in an
+isolated, local development setup.
+
+---
+
 ## 🙏 Acknowledgements
 
 - **Ergast Developer API**  
