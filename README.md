@@ -308,7 +308,7 @@ Data/
 
 ---
 
-### Security Considerations
+### 🛡️ Security Considerations
 
 The complete application (backend, frontend, and machine learning modules)
 was developed and executed exclusively in a local environment. The database
